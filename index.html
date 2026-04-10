@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScalingMBA – Marktführer entstehen NICHT durch Zufall!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
+
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeInRight 0.5s ease-out forwards; }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+        .animate-zoom-in { animation: zoomIn 0.5s ease-out forwards; }
+        .marquee-track { display: flex; animation: marquee 28s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        .revenue-radio:checked + span {
+            background-color: rgba(228, 192, 127, 0.1);
+            border-color: #E4C07F;
+            color: #E4C07F;
+        }
+
+        .problem-card { transition: transform 0.3s ease, border-color 0.3s ease; }
+        .problem-card:hover { transform: translateY(-4px); border-color: rgba(228, 192, 127, 0.3); }
+
+        .stat-card { background: linear-gradient(135deg, #111111 0%, #161616 100%); }
+
+        .testimonial-card { transition: transform 0.3s ease; }
+        .testimonial-card:hover { transform: translateY(-3px); }
+
+        .gold-gradient { background: linear-gradient(90deg, #E4C07F, #f0d49a, #E4C07F); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(228,192,127,0.3), transparent); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+<!-- ─── BACKGROUND EFFECTS ─── -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#E4C07F] opacity-[0.025] blur-[140px] rounded-full"></div>
+    <div class="absolute top-[60%] -right-[10%] w-[400px] h-[400px] bg-blue-600 opacity-[0.02] blur-[100px] rounded-full"></div>
+</div>
+
+<!-- ─── NAVBAR ─── -->
+<nav class="fixed top-0 w-full z-50 bg-[#050505]/85 backdrop-blur-md border-b border-gray-800/50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="#" class="flex items-center">
+            <img src="images/logo.png" alt="ScalingMBA Logo" class="h-7 sm:h-9 w-auto">
+        </a>
+        <button onclick="scrollToForm()"
+            class="hidden md:flex items-center text-sm font-bold text-black bg-[#E4C07F] hover:bg-[#f0c479] px-5 py-2.5 rounded transition-all">
+            Termin vereinbaren
+            <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+        </button>
+        <button onclick="scrollToForm()"
+            class="md:hidden flex items-center text-sm font-bold text-black bg-[#E4C07F] hover:bg-[#f0c479] px-4 py-2 rounded transition-all">
+            Termin
+        </button>
+    </div>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main class="pb-24 relative z-10">
+
+    <!-- ── HERO / VSL ── -->
+    <!-- Single-column centred layout. min-h + justify-center guarantee VSL & CTA are
+         always above the fold. pt-20 clears the fixed h-20 navbar. -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 text-center
+                    min-h-[calc(100svh-80px)]
+                    flex flex-col justify-center
+                    pt-20 pb-6">
+
+        <div class="inline-flex items-center gap-2 bg-[#E4C07F]/10 border border-[#E4C07F]/30 rounded-full px-4 py-1.5 mb-3 sm:mb-5 text-xs sm:text-sm text-[#E4C07F] font-medium mx-auto">
+            <span class="w-2 h-2 rounded-full bg-[#E4C07F] animate-pulse flex-shrink-0"></span>
+            Exklusiv für KMUs &amp; gehobenen Mittelstand
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-3 sm:mb-4">
+            Marktführer entstehen <span class="gold-gradient">NICHT</span><br class="hidden sm:block"> durch Zufall!
+        </h1>
+
+        <p class="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 max-w-2xl mx-auto">
+            Alle Tools in einem System – CRM, Reporting &amp; One-Click-Automationen, die dafür sorgen, dass kein Deal mehr verloren geht.
+        </p>
+
+        <!-- VSL Video – max-w-3xl keeps height ~430 px on desktop, well within the fold -->
+        <div onclick="scrollToForm()"
+            class="relative w-full aspect-video max-w-3xl mx-auto mb-5 sm:mb-7
+                   bg-[#0a0a0a] border border-gray-800 rounded-2xl overflow-hidden
+                   group cursor-pointer shadow-2xl shadow-black/60">
+
+            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-black">
+                <div class="absolute top-1/4 left-1/4 w-40 h-40 bg-[#E4C07F] opacity-10 blur-[60px] rounded-full"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-56 h-56 bg-blue-500 opacity-10 blur-[70px] rounded-full"></div>
+                <div class="absolute inset-0" style="background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 24px 24px;"></div>
+            </div>
+
+            <div class="absolute inset-0 flex flex-col items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#E4C07F]/20 flex items-center justify-center backdrop-blur-sm border border-[#E4C07F]/30 mb-3 group-hover:bg-[#E4C07F] transition-all">
+                    <i data-lucide="play" class="w-6 h-6 sm:w-8 sm:h-8 ml-1 text-[#E4C07F] group-hover:text-black" style="fill: currentColor;"></i>
+                </div>
+                <h3 class="text-sm sm:text-xl font-semibold text-white text-center px-4">Sehen Sie, wie wir Unternehmen zum Marktführer machen</h3>
+                <p class="text-gray-400 text-xs sm:text-sm mt-2 flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-red-500 mr-2 animate-pulse"></span>
+                    12:45 Min
+                </p>
+            </div>
+        </div>
+
+        <!-- CTA – below the video -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button onclick="scrollToForm()"
+                class="inline-flex items-center gap-2 bg-[#E4C07F] hover:bg-[#f0c479] text-black font-bold px-7 py-3.5 rounded text-sm transition-all w-full sm:w-auto justify-center">
+                Kostenloses Strategiegespräch
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </button>
+            <span class="text-gray-500 text-xs">Keine Verpflichtungen · 100% kostenlos</span>
+        </div>
+
+    </section>
+
+    <!-- ── STATS BAR ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-20">
+        <div class="section-divider mb-12"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="stat-card border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1">15+</div>
+                <div class="text-gray-400 text-xs sm:text-sm">Jahre Erfahrung</div>
+            </div>
+            <div class="stat-card border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1">42+</div>
+                <div class="text-gray-400 text-xs sm:text-sm">Kunden betreut</div>
+            </div>
+            <div class="stat-card border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1 whitespace-nowrap">1 Mio.+</div>
+                <div class="text-gray-400 text-xs sm:text-sm">Leads verwaltet</div>
+            </div>
+            <div class="stat-card border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1">5 Mio.</div>
+                <div class="text-gray-400 text-xs sm:text-sm whitespace-nowrap">Auto. / Monat</div>
+            </div>
+        </div>
+        <div class="section-divider mt-12"></div>
+    </section>
+
+    <!-- ── PROBLEM SECTION ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-20">
+        <div class="text-center mb-12">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Das Problem</p>
+            <h2 class="text-3xl md:text-4xl font-bold">Wer kennt es nicht auch?</h2>
+            <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                Diese Probleme kosten Ihr Unternehmen täglich Umsatz – und die meisten merken es nicht einmal.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="layers" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">Zu viele Systeme</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Vertriebler springen zwischen Systemen hin und her – das kostet Zeit und erzeugt Fehlerquellen.
+                </p>
+            </div>
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="bar-chart-2" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">Kein KPI-Überblick</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Kein klarer Überblick über die wirklich wichtigen Kennzahlen – was Optimierungen erschwert und den Vertrieb ineffizient macht.
+                </p>
+            </div>
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="user-x" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">50–79% Leads verloren</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Laut Statistik gehen Ihnen 50–79% der Kunden verloren. Bestandskunden, Up- &amp; Crosssales und Leads im Follow-Up-Prozess werden vernachlässigt.
+                </p>
+            </div>
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="clock" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">80% Sales-Potenziale verloren</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Fehlendes Leadmanagement führt dazu, dass potenzielle Kunden zu lange warten und zur Konkurrenz abwandern.
+                </p>
+            </div>
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">95% Zeit für manuelle Pflege</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Ihr Team verschwendet 95% seiner Zeit damit, Daten und Systeme manuell zu pflegen – das minimiert Effizienz, Fokus und Umsatz.
+                </p>
+            </div>
+
+            <div class="problem-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-4">
+                    <i data-lucide="eye-off" class="w-5 h-5 text-red-400"></i>
+                </div>
+                <h3 class="font-semibold text-white mb-2">Keine Vertriebstransparenz</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Ihre Vertriebler sind mal top, mal floppen sie – aber es fehlt die Transparenz, um genau zu verstehen, woran es liegt.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ── SOLUTION / FEATURES ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-24">
+        <div class="text-center mb-14">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Die Lösung</p>
+            <h2 class="text-3xl md:text-4xl font-bold">ScalingCRM – Alles in einem System!</h2>
+            <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                Die ONE CLICK SOLUTION – entwickelt, um aus komplexen Vertriebsprozessen effiziente, wachstumsorientierte Systeme zu machen.
+            </p>
+        </div>
+
+        <!-- Feature grid with dashboard image -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-16">
+            <div class="space-y-5">
+                <div class="flex items-start gap-4 p-4 bg-[#0f0f0f] border border-gray-800 rounded-xl hover:border-[#E4C07F]/30 transition-colors">
+                    <div class="w-9 h-9 rounded-lg bg-[#E4C07F]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <i data-lucide="calendar-check" class="w-4 h-4 text-[#E4C07F]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-1">Termin- &amp; Aufgabenmanagement</h4>
+                        <p class="text-gray-400 text-sm">Kein Deal bleibt mehr liegen. Automatische Erinnerungen und Follow-up-Sequenzen halten Ihr Team fokussiert.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-[#0f0f0f] border border-gray-800 rounded-xl hover:border-[#E4C07F]/30 transition-colors">
+                    <div class="w-9 h-9 rounded-lg bg-[#E4C07F]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <i data-lucide="trending-up" class="w-4 h-4 text-[#E4C07F]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-1">Reporting &amp; KPI-Tracking</h4>
+                        <p class="text-gray-400 text-sm">Ad-to-Sale Tracking, Kosten pro Abschluss und Aktivitätsdaten – alles in einem Dashboard sichtbar.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-[#0f0f0f] border border-gray-800 rounded-xl hover:border-[#E4C07F]/30 transition-colors">
+                    <div class="w-9 h-9 rounded-lg bg-[#E4C07F]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <i data-lucide="zap" class="w-4 h-4 text-[#E4C07F]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-1">Marketingautomation</h4>
+                        <p class="text-gray-400 text-sm">One-Click-Automationen für Pipeline, Anrufe und Kampagnen. Mehr Sales mit weniger Aufwand.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-[#0f0f0f] border border-gray-800 rounded-xl hover:border-[#E4C07F]/30 transition-colors">
+                    <div class="w-9 h-9 rounded-lg bg-[#E4C07F]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <i data-lucide="file-text" class="w-4 h-4 text-[#E4C07F]"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white mb-1">Vertragswesen &amp; Buchhaltung</h4>
+                        <p class="text-gray-400 text-sm">Verträge, Dokumente und Abrechnungen direkt im System – kein Tool-Wechsel mehr nötig.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard screenshot -->
+            <div class="relative">
+                <div class="absolute -inset-4 bg-[#E4C07F] opacity-[0.04] blur-[60px] rounded-full"></div>
+                <img src="images/corporation.png" alt="ScalingCRM Dashboard" class="relative w-full rounded-2xl border border-gray-800 shadow-2xl">
+            </div>
+        </div>
+
+        <!-- Checklist row -->
+        <div class="bg-[#0f0f0f] border border-gray-800 rounded-2xl p-8">
+            <h3 class="text-xl font-bold text-white mb-6 text-center">Was Sie mit ScalingCRM erreichen:</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Zeit für die wichtigen Dinge</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Motivierte Vertriebsteams</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Alle Prozesse in einem System</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Weniger Verwaltung, mehr Sales</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Marketing &amp; Affiliate Tracking</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Sales KPI Dashboards</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Fulfillment par Excellence</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-[#E4C07F] flex-shrink-0"></i>
+                    <span class="text-gray-300 text-sm">Keine Überraschungen mehr</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── RESULTS / COMPARISON ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-24">
+        <div class="text-center mb-12">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Ergebnisse</p>
+            <h2 class="text-3xl md:text-4xl font-bold">Zahlen, die für sich sprechen</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Left: Old way -->
+            <div class="bg-[#0f0f0f] border border-red-900/30 rounded-2xl p-8">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <span class="text-red-400 font-semibold text-sm uppercase tracking-wider">Eigenes CRM / andere Anbieter</span>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Vernachlässigte Leadpflege</li>
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Ständige manuelle Optimierung nötig</li>
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Kein Fokus auf wichtige Aufgaben</li>
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Pipeline-Chaos</li>
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Manuelle Auswertung von KPIs</li>
+                    <li class="flex items-center gap-3 text-gray-500 text-sm"><i data-lucide="x" class="w-4 h-4 text-red-500 flex-shrink-0"></i> Wenige Verkäufe</li>
+                </ul>
+            </div>
+
+            <!-- Right: ScalingMBA -->
+            <div class="bg-[#0f0f0f] border border-[#E4C07F]/30 rounded-2xl p-8">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="w-3 h-3 rounded-full bg-[#E4C07F]"></div>
+                    <span class="text-[#E4C07F] font-semibold text-sm uppercase tracking-wider">Mit ScalingMBA</span>
+                </div>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> Onboarding innerhalb weniger Stunden</li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> Reduzierung interner Kosten</li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> Erprobtes System durch Partner &amp; Experten</li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> SCALING im Fokus</li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> Laufende Prozessverbesserungen</li>
+                    <li class="flex items-center gap-3 text-gray-300 text-sm"><i data-lucide="check" class="w-4 h-4 text-[#E4C07F] flex-shrink-0"></i> Alles im Überblick, keine Überraschungen</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Result stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="text-center p-4 sm:p-6 bg-[#0f0f0f] border border-gray-800 rounded-xl">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1 whitespace-nowrap">+40%</div>
+                <div class="text-gray-400 text-xs sm:text-sm whitespace-nowrap">Umsatzsteigerung</div>
+            </div>
+            <div class="text-center p-4 sm:p-6 bg-[#0f0f0f] border border-gray-800 rounded-xl">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1 whitespace-nowrap">2×</div>
+                <div class="text-gray-400 text-xs sm:text-sm whitespace-nowrap">Mehr Wachstum</div>
+            </div>
+            <div class="text-center p-4 sm:p-6 bg-[#0f0f0f] border border-gray-800 rounded-xl">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1 whitespace-nowrap">–70%</div>
+                <div class="text-gray-400 text-xs sm:text-sm whitespace-nowrap">Schlankere Prozesse</div>
+            </div>
+            <div class="text-center p-4 sm:p-6 bg-[#0f0f0f] border border-gray-800 rounded-xl">
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#E4C07F] mb-1 whitespace-nowrap">+263%</div>
+                <div class="text-gray-400 text-xs sm:text-sm whitespace-nowrap">Effizienzgewinn</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── 6-STEP PROCESS ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-24">
+        <div class="text-center mb-12">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Unser Ansatz</p>
+            <h2 class="text-3xl md:text-4xl font-bold">Individuell angepasst.<br class="hidden md:block"> Dein Weg mit ScalingMBA</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">1</div>
+                <h4 class="font-semibold text-white mb-2">Onboarding &amp; Zielsetzung</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Maßgeschneidertes Onboarding, klare Ziele und ein Fahrplan, der Ihr Vertriebsteam gezielt zum Erfolg führt.</p>
+            </div>
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">2</div>
+                <h4 class="font-semibold text-white mb-2">Datenanalyse &amp; Migration</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Datenanalyse, Bereinigung und Migration aller Kontakte vom alten CRM in Ihre neue All-in-One Lösung.</p>
+            </div>
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">3</div>
+                <h4 class="font-semibold text-white mb-2">IT-Management</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Systemverknüpfung, Automatisierung und Dokumentenintegration – mit regelmäßigen Checks und Optimierungen.</p>
+            </div>
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">4</div>
+                <h4 class="font-semibold text-white mb-2">Controlling</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Hält Marketing, Vertriebsaktivitäten, KPIs und Kosten im Blick – mit automatisiertem Reporting zu wichtigen Punkten.</p>
+            </div>
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">5</div>
+                <h4 class="font-semibold text-white mb-2">CRM-Betreuung</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Laufende Schulungen, regelmäßige Updates und schnelle Umsetzung Ihrer Anforderungen inklusive.</p>
+            </div>
+            <div class="bg-[#0f0f0f] border border-gray-800 rounded-xl p-6 hover:border-[#E4C07F]/30 transition-colors">
+                <div class="w-8 h-8 rounded-lg bg-[#E4C07F] text-black font-bold text-sm flex items-center justify-center mb-4">6</div>
+                <h4 class="font-semibold text-white mb-2">Live-Support</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Support im Slack-Channel – Unterstützung 5 Tage die Woche von 9 bis 17 Uhr.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PARTNER LOGOS (Marquee) ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-24">
+        <div class="section-divider mb-12"></div>
+        <p class="text-center text-gray-500 text-sm uppercase tracking-widest mb-8">Mit wem wir zusammenarbeiten</p>
+
+        <div class="overflow-hidden relative">
+            <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none"></div>
+            <div class="marquee-track gap-12 items-center">
+                <!-- Repeated twice for infinite effect -->
+                <img src="images/work-1.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-2.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-3.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-4.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-5.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-6.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-1.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-2.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-3.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <!-- Duplicate -->
+                <img src="images/work-1.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-2.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-3.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-4.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-5.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/work-6.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-1.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-2.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+                <img src="images/client-3.png" alt="Partner" class="h-10 w-auto opacity-50 hover:opacity-100 transition-opacity flex-shrink-0">
+            </div>
+        </div>
+
+        <!-- Technology partners -->
+        <div class="flex items-center justify-center gap-10 mt-10 flex-wrap">
+            <img src="images/partner-make.svg" alt="Make" class="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity">
+            <img src="images/partner-close.svg" alt="Close CRM" class="h-7 w-auto opacity-60 hover:opacity-100 transition-opacity">
+            <img src="images/award-g2-1.svg" alt="G2 Award" class="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
+            <img src="images/award-g2-2.webp" alt="G2 Award" class="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
+            <img src="images/award-g2-3.webp" alt="G2 Award" class="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
+            <img src="images/award-g2-4.webp" alt="G2 Award" class="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity">
+        </div>
+        <div class="section-divider mt-12"></div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-20">
+        <div class="text-center mb-12">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Kundenstimmen</p>
+            <h2 class="text-3xl md:text-4xl font-bold">Was unsere Kunden sagen</h2>
+        </div>
+
+        <!-- Featured testimonial -->
+        <div class="bg-[#0f0f0f] border border-[#E4C07F]/20 rounded-2xl p-8 md:p-10 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-48 h-48 bg-[#E4C07F] opacity-[0.03] blur-[60px] rounded-full"></div>
+            <div class="flex gap-1 mb-5">
+                <i data-lucide="star" class="w-5 h-5 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                <i data-lucide="star" class="w-5 h-5 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                <i data-lucide="star" class="w-5 h-5 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                <i data-lucide="star" class="w-5 h-5 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                <i data-lucide="star" class="w-5 h-5 text-[#E4C07F]" style="fill:#E4C07F"></i>
+            </div>
+            <blockquote class="text-xl md:text-2xl text-white font-light leading-relaxed mb-6 italic">
+                „ScalingMBA hat unsere Geschäftsprozesse auf ein neues Level gehoben. Die Workflow-Automatisierung und das nahtlos integrierte CRM ermöglichen es uns, effizienter zu arbeiten und schneller zu skalieren. Mit ihrer Expertise wurden alle Geschäftsbereiche optimal verbunden – ein echter Gamechanger!"
+            </blockquote>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-sm">DK</div>
+                <div>
+                    <div class="font-semibold text-white">Dennis Korel</div>
+                    <div class="text-gray-500 text-sm">Unternehmer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonial grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„Die Zusammenarbeit mit ScalingMBA ist einfach super! Mit gleichem Aufwand schaffe ich jetzt alles in unter der halben Zeit."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">BI</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Bakdash Islam</div>
+                        <div class="text-xs text-gray-500">Unternehmer &amp; Fitness Coach</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„ScalingMBA hat sich extrem ins Zeug gelegt, uns für 2x Projekte die CRM-Systeme einzurichten mit allen entsprechenden Automationen."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">MH</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Maxim Hearing</div>
+                        <div class="text-xs text-gray-500">CEO</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„Wenn es um die CRM-Betreuung geht, dann gibt es kein besseres Unternehmen. Konstant sind die Jungs am tun und machen, um stets die besten Ergebnisse zu erzielen."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">JH</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Jeremy Haering</div>
+                        <div class="text-xs text-gray-500">Unternehmer</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„Scaling MBA hat unser Unternehmen in beeindruckender Weise bei der Systematisierung und Prozessoptimierung unterstützt."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">CP</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Christian Peetz</div>
+                        <div class="text-xs text-gray-500">CEO</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„Die Rentabilität unserer Mitarbeiter wurde von 8–12 Wochen in kürzester Zeit auf 2 Wochen reduziert."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">LK</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Lukas Klatt</div>
+                        <div class="text-xs text-gray-500">CEO, Nuvia HR</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card bg-[#0f0f0f] border border-gray-800 rounded-xl p-6">
+                <div class="flex gap-1 mb-4">
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                    <i data-lucide="star" class="w-4 h-4 text-[#E4C07F]" style="fill:#E4C07F"></i>
+                </div>
+                <p class="text-gray-300 text-sm leading-relaxed mb-5 italic">„Wir haben gerade den ersten Schritt in unserem Automations-Projekt mit ScalingMBA abgeschlossen und sind super zufrieden."</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-[#E4C07F]/20 flex items-center justify-center text-[#E4C07F] font-bold text-xs">SJ</div>
+                    <div>
+                        <div class="text-sm font-semibold text-white">Sandra Janecke</div>
+                        <div class="text-xs text-gray-500">CEO, BlueOcean Rentals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── APPLICATION FORM ── -->
+    <section id="application-form" class="max-w-3xl mx-auto px-6 mt-28">
+
+        <!-- Pre-form CTA headline -->
+        <div class="text-center mb-10">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">Jetzt starten</p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Bereit, Marktführer zu werden?</h2>
+            <p class="text-gray-400 max-w-xl mx-auto">
+                Buchen Sie Ihren kostenlosen Sales-Breakdown – wir analysieren gemeinsam Ihre größten Wachstumshebel.
+            </p>
+        </div>
+
+        <div class="bg-[#111111] border border-gray-800 rounded-2xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-32 -right-32 w-64 h-64 bg-[#E4C07F] opacity-[0.05] blur-[80px] rounded-full pointer-events-none"></div>
+
+            <!-- Form Container -->
+            <div id="form-container">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-bold mb-2">Bewerben Sie sich für ein kostenloses Strategiegespräch</h2>
+                    <p class="text-gray-400 text-sm">Lassen Sie uns herausfinden, ob wir zusammenpassen. Schritt <span id="step-counter">1</span>/3</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex items-center justify-between mb-12 relative">
+                    <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-800 -z-10 rounded-full"></div>
+                    <div id="progress-bar-fill" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-[#E4C07F] -z-10 rounded-full transition-all duration-500" style="width: 0%;"></div>
+
+                    <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#111111] border-[#E4C07F] text-[#E4C07F]" data-step="1">1</div>
+                    <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#111111] border-gray-700 text-gray-500" data-step="2">2</div>
+                    <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#111111] border-gray-700 text-gray-500" data-step="3">3</div>
+                </div>
+
+                <form id="vsl-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+
+                    <!-- STEP 1: Company Info -->
+                    <div id="step-1" class="step-content active space-y-5">
+                        <div class="flex items-center space-x-2 text-[#E4C07F] mb-6">
+                            <i data-lucide="building-2" class="w-5 h-5"></i>
+                            <h3 class="text-xl font-semibold text-white">Unternehmensdaten</h3>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Unternehmensname</label>
+                            <input type="text" name="companyName" placeholder="z.B. Muster GmbH" required
+                                class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Website URL</label>
+                                <input type="url" name="website" placeholder="https://www.beispiel.de" required
+                                    class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Branche</label>
+                                <input type="text" name="industry" placeholder="z.B. Produktion, SaaS..." required
+                                    class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Current Situation -->
+                    <div id="step-2" class="step-content space-y-5">
+                        <div class="flex items-center space-x-2 text-[#E4C07F] mb-6">
+                            <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            <h3 class="text-xl font-semibold text-white">Aktuelle Situation</h3>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-3">Jahresumsatz</label>
+                            <div id="revenue-options" class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="revenue" value="Unter 500k €" class="sr-only revenue-radio" required>
+                                    <span class="flex items-center justify-center px-4 py-3 rounded-md border border-gray-800 bg-[#1A1A1A] text-gray-300 hover:border-gray-600 transition-all text-sm font-medium">Unter 500k €</span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="revenue" value="500k € - 1M €" class="sr-only revenue-radio">
+                                    <span class="flex items-center justify-center px-4 py-3 rounded-md border border-gray-800 bg-[#1A1A1A] text-gray-300 hover:border-gray-600 transition-all text-sm font-medium">500k € – 1M €</span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="revenue" value="1M € - 5M €" class="sr-only revenue-radio">
+                                    <span class="flex items-center justify-center px-4 py-3 rounded-md border border-gray-800 bg-[#1A1A1A] text-gray-300 hover:border-gray-600 transition-all text-sm font-medium">1M € – 5M €</span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="revenue" value="5M+ €" class="sr-only revenue-radio">
+                                    <span class="flex items-center justify-center px-4 py-3 rounded-md border border-gray-800 bg-[#1A1A1A] text-gray-300 hover:border-gray-600 transition-all text-sm font-medium">5M+ €</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Größter Engpass aktuell?</label>
+                            <textarea name="challenge" placeholder="Beschreiben Sie kurz Ihre größte Herausforderung beim Skalieren..." rows="4" required
+                                class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600 resize-none"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Contact -->
+                    <div id="step-3" class="step-content space-y-5">
+                        <div class="flex items-center space-x-2 text-[#E4C07F] mb-6">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            <h3 class="text-xl font-semibold text-white">Kontaktinformationen</h3>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Vorname</label>
+                                <input type="text" name="firstName" placeholder="Max" required
+                                    class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Nachname</label>
+                                <input type="text" name="lastName" placeholder="Mustermann" required
+                                    class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Geschäftliche E-Mail</label>
+                            <input type="email" name="email" placeholder="max@unternehmen.de" required
+                                class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1">Telefonnummer</label>
+                            <input type="tel" name="phone" placeholder="+49 123 456789" required
+                                class="w-full bg-[#1A1A1A] border border-gray-800 text-white rounded-md px-4 py-3 focus:outline-none focus:border-[#E4C07F] focus:ring-1 focus:ring-[#E4C07F] transition-colors placeholder-gray-600">
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation -->
+                    <div class="flex items-center justify-between pt-8 mt-8 border-t border-gray-800">
+                        <button type="button" id="btn-prev" onclick="changeStep(-1)"
+                            class="invisible px-6 py-3 text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                            Zurück
+                        </button>
+                        <button type="button" id="btn-next" onclick="changeStep(1)"
+                            class="px-8 py-3 bg-[#E4C07F] hover:bg-[#f0c479] text-black text-sm font-bold rounded flex items-center transition-colors">
+                            Nächster Schritt
+                            <i data-lucide="arrow-up-right" class="w-4 h-4 ml-1"></i>
+                        </button>
+                        <button type="submit" id="btn-submit"
+                            class="hidden px-8 py-3 bg-[#E4C07F] hover:bg-[#f0c479] text-black text-sm font-bold rounded flex items-center transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+                            <span id="submit-text">Bewerbung absenden</span>
+                            <i id="submit-icon" data-lucide="check" class="w-4 h-4 ml-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SUCCESS STATE -->
+            <div id="success-container" class="hidden text-center py-12 animate-zoom-in">
+                <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="check-circle" class="w-10 h-10 text-green-500"></i>
+                </div>
+                <h3 class="text-3xl font-bold mb-4">Bewerbung eingegangen!</h3>
+                <p class="text-gray-400 max-w-md mx-auto mb-10 leading-relaxed">
+                    Vielen Dank für Ihre Bewerbung. Einer unserer Wachstumsexperten wird Ihre Daten prüfen und sich innerhalb von 24 Stunden bei Ihnen melden, um Ihr Strategiegespräch zu planen.
+                </p>
+                <button onclick="resetForm()"
+                    class="px-6 py-3 border border-gray-700 hover:border-gray-500 text-white rounded transition-colors text-sm font-medium">
+                    Zurück zur Startseite
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="max-w-3xl mx-auto px-6 mt-24">
+        <div class="text-center mb-12">
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-3">FAQ</p>
+            <h2 class="text-3xl md:text-4xl font-bold">Häufige Fragen</h2>
+        </div>
+        <div class="space-y-4" id="faq-container">
+
+            <details class="group bg-[#0f0f0f] border border-gray-800 rounded-xl overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none">
+                    <span class="font-medium text-white">Was unterscheidet ScalingMBA vom Wettbewerb?</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180"></i>
+                </summary>
+                <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-4">
+                    Wir bieten mehr als nur Beratung oder Agenturdienste. Unser Fokus liegt darauf, als strategischer Partner gemeinsam mit Ihnen nachhaltiges Wachstum und Skalierung zu erreichen – mit erprobten Systemen aus Vertrieb, Marketing und Unternehmensentwicklung.
+                </div>
+            </details>
+
+            <details class="group bg-[#0f0f0f] border border-gray-800 rounded-xl overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none">
+                    <span class="font-medium text-white">Wie schnell kann der Start erfolgen?</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180"></i>
+                </summary>
+                <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-4">
+                    Die grundlegende Einrichtung dauert in der Regel nur wenige Stunden, sodass Sie fast sofort loslegen können. Sollte eine umfassende Datenmigration nötig sein, kalkulieren wir dafür je nach Umfang maximal zwei Wochen ein.
+                </div>
+            </details>
+
+            <details class="group bg-[#0f0f0f] border border-gray-800 rounded-xl overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none">
+                    <span class="font-medium text-white">Wir nutzen bereits ein CRM. Lohnt sich ein Wechsel?</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180"></i>
+                </summary>
+                <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-4">
+                    Unsere Kunden erzielen im Schnitt: über 40% Umsatzsteigerung, doppelt so viel Zeit für Wachstum, 70% schlankere Prozesse und eine Effizienzsteigerung um 263% – bereits in den ersten 2 Monaten.
+                </div>
+            </details>
+
+            <details class="group bg-[#0f0f0f] border border-gray-800 rounded-xl overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none">
+                    <span class="font-medium text-white">Wie läuft ein erstes Gespräch ab?</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180"></i>
+                </summary>
+                <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-4">
+                    Im kostenlosen "Sales-Breakdown" beleuchten wir Ihre aktuelle Situation und identifizieren gemeinsam die stärksten Hebel für Ihr Wachstum. Keine Verpflichtungen – nur konkrete Erkenntnisse.
+                </div>
+            </details>
+
+            <details class="group bg-[#0f0f0f] border border-gray-800 rounded-xl overflow-hidden">
+                <summary class="flex items-center justify-between px-6 py-5 cursor-pointer list-none">
+                    <span class="font-medium text-white">Welche Voraussetzungen sind nötig?</span>
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180"></i>
+                </summary>
+                <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed border-t border-gray-800 pt-4">
+                    Ihr Unternehmen sollte Ihr Hauptfokus sein – Sie müssen bereit sein, Zeit und Ressourcen in sein Wachstum zu investieren. Eine Veränderungsbereitschaft ist entscheidend. Wir arbeiten mit KMUs und gehobenen Mittelständlern zusammen.
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <!-- ── FINAL CTA BANNER ── -->
+    <section class="max-w-5xl mx-auto px-6 mt-24">
+        <div class="relative bg-[#0f0f0f] border border-[#E4C07F]/20 rounded-2xl p-8 sm:p-10 md:p-14 text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#E4C07F]/5 to-transparent pointer-events-none"></div>
+            <p class="text-[#E4C07F] text-sm font-semibold uppercase tracking-widest mb-4">Jetzt handeln</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4">
+                Gestalten Sie Ihre Branche neu.<br class="hidden md:block"> Werden Sie Marktführer.
+            </h2>
+            <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-8">
+                Mit ScalingCRM als Expertenlösung für Kundenverwaltung, Marketing, Automatisierung und Reporting haben Sie endlich Zeit für das Wesentliche – während Ihr Vertrieb automatisiert auf vollen Touren läuft.
+            </p>
+            <button onclick="scrollToForm()"
+                class="inline-flex items-center justify-center gap-2 bg-[#E4C07F] hover:bg-[#f0c479] text-black font-bold px-8 py-3.5 rounded text-sm sm:text-base transition-all w-full sm:w-auto">
+                Termin vereinbaren
+                <i data-lucide="arrow-up-right" class="w-4 h-4 flex-shrink-0"></i>
+            </button>
+            <p class="text-gray-600 text-xs mt-4">Keine Verpflichtungen · Fesma Solutions GmbH · Bremen</p>
+        </div>
+    </section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer class="border-t border-gray-800/50 py-10 mt-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <img src="images/logo.png" alt="ScalingMBA" class="h-9 w-auto opacity-80">
+            <p class="text-gray-600 text-sm">© <span id="year"></span> Fesma Solutions GmbH · Konsul-Smidt-Str. 8s, 28217 Bremen</p>
+            <div class="flex space-x-6 text-sm text-gray-500">
+                <a href="#" class="hover:text-gray-300 transition-colors">Impressum</a>
+                <a href="#" class="hover:text-gray-300 transition-colors">Datenschutzerklärung</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ─── SCRIPT ─── -->
+<script>
+    lucide.createIcons();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let currentStep = 1;
+
+    const btnPrev        = document.getElementById('btn-prev');
+    const btnNext        = document.getElementById('btn-next');
+    const btnSubmit      = document.getElementById('btn-submit');
+    const submitText     = document.getElementById('submit-text');
+    const submitIcon     = document.getElementById('submit-icon');
+    const progressFill   = document.getElementById('progress-bar-fill');
+    const stepIndicators = document.querySelectorAll('.step-indicator');
+    const stepCounter    = document.getElementById('step-counter');
+    const formContainer  = document.getElementById('form-container');
+    const successContainer = document.getElementById('success-container');
+
+    function changeStep(direction) {
+        if (direction === 1) {
+            const currentEl = document.getElementById(`step-${currentStep}`);
+            const inputs = currentEl.querySelectorAll('input, textarea');
+            let valid = true;
+            inputs.forEach(inp => {
+                if (!inp.checkValidity()) { inp.reportValidity(); valid = false; }
+            });
+            if (!valid) return;
+        }
+
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        currentStep = Math.max(1, Math.min(currentStep + direction, 3));
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+        updateUI();
+    }
+
+    function updateUI() {
+        stepCounter.textContent = currentStep;
+        progressFill.style.width = `${((currentStep - 1) / 2) * 100}%`;
+
+        stepIndicators.forEach((ind, i) => {
+            const n = i + 1;
+            ind.innerHTML = '';
+            if (currentStep > n) {
+                ind.className = "step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#E4C07F] border-[#E4C07F] text-black";
+                const icon = document.createElement('i');
+                icon.setAttribute('data-lucide', 'check');
+                icon.className = 'w-5 h-5';
+                ind.appendChild(icon);
+            } else if (currentStep === n) {
+                ind.className = "step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#111111] border-[#E4C07F] text-[#E4C07F]";
+                ind.textContent = n;
+            } else {
+                ind.className = "step-indicator w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border-2 transition-all duration-300 bg-[#111111] border-gray-700 text-gray-500";
+                ind.textContent = n;
+            }
+        });
+        lucide.createIcons();
+
+        btnPrev.classList.toggle('invisible', currentStep === 1);
+        btnNext.classList.toggle('hidden', currentStep === 3);
+        btnSubmit.classList.toggle('hidden', currentStep !== 3);
+    }
+
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        btnSubmit.disabled = true;
+        submitText.textContent = 'Wird gesendet...';
+        submitIcon.classList.add('hidden');
+
+        setTimeout(() => {
+            formContainer.classList.add('hidden');
+            successContainer.classList.remove('hidden');
+            btnSubmit.disabled = false;
+            submitText.textContent = 'Bewerbung absenden';
+            submitIcon.classList.remove('hidden');
+        }, 1500);
+    }
+
+    function resetForm() {
+        document.getElementById('vsl-form').reset();
+        currentStep = 1;
+        document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+        document.getElementById('step-1').classList.add('active');
+        updateUI();
+        successContainer.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToForm() {
+        document.getElementById('application-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
