@@ -791,7 +791,7 @@
                     <h3 class="text-2xl font-bold mb-2">Fast geschafft!</h3>
                     <p class="text-gray-400 text-sm max-w-md mx-auto">Ihre Daten wurden erfolgreich übermittelt. Wählen Sie jetzt Ihren Wunschtermin für das kostenlose Strategiegespräch.</p>
                 </div>
-                <div class="calendly-inline-widget" data-url="https://calendly.com/DEIN-LINK?hide_gdpr_banner=1&background_color=111111&text_color=ffffff&primary_color=E4C07F" style="min-width:100%;height:660px;"></div>
+                <div id="calendly-embed" class="calendly-inline-widget" data-url="" style="min-width:100%;height:660px;"></div>
             </div>
         </div>
     </section>
@@ -897,6 +897,15 @@
     lucide.createIcons();
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // ── Parse UTM parameters from URL ──
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    const utmParams = {};
+    utmKeys.forEach(key => {
+        const val = urlParams.get(key);
+        if (val) utmParams[key] = val;
+    });
+
     let currentStep = 1;
 
     const btnPrev        = document.getElementById('btn-prev');
@@ -961,11 +970,28 @@
         submitText.textContent = 'Wird gesendet...';
         submitIcon.classList.add('hidden');
 
-        // Collect form data
+        // Collect form data + UTM params
         const form = document.getElementById('vsl-form');
         const formData = new FormData(form);
         const payload = {};
         formData.forEach((value, key) => { payload[key] = value; });
+        // Merge UTMs into payload
+        Object.assign(payload, utmParams);
+
+        // Build Calendly URL with prefill + UTMs
+        const calendlyBase = 'https://calendly.com/scaling-mba/smba-1';
+        const calParams = new URLSearchParams({
+            hide_gdpr_banner: '1',
+            background_color: '111111',
+            text_color: 'ffffff',
+            primary_color: 'E4C07F'
+        });
+        // Prefill name & email
+        if (payload.firstName) calParams.set('name', (payload.firstName + ' ' + (payload.lastName || '')).trim());
+        if (payload.email) calParams.set('email', payload.email);
+        // Add UTMs to Calendly
+        Object.entries(utmParams).forEach(([k, v]) => calParams.set(k, v));
+        const calendlyUrl = calendlyBase + '?' + calParams.toString();
 
         // Send to Make webhook
         fetch('https://hook.eu2.make.com/ly4qcvad5owho8enb4ifepoulsm7nz6o', {
@@ -974,22 +1000,32 @@
             body: JSON.stringify(payload)
         })
         .then(() => {
-            formContainer.classList.add('hidden');
-            successContainer.classList.remove('hidden');
-            lucide.createIcons();
+            showCalendly(calendlyUrl);
         })
         .catch(err => {
             console.error('Webhook error:', err);
             // Still show Calendly even if webhook fails
-            formContainer.classList.add('hidden');
-            successContainer.classList.remove('hidden');
-            lucide.createIcons();
+            showCalendly(calendlyUrl);
         })
         .finally(() => {
             btnSubmit.disabled = false;
             submitText.textContent = 'Bewerbung absenden';
             submitIcon.classList.remove('hidden');
         });
+    }
+
+    function showCalendly(url) {
+        document.getElementById('calendly-embed').setAttribute('data-url', url);
+        formContainer.classList.add('hidden');
+        successContainer.classList.remove('hidden');
+        lucide.createIcons();
+        // Re-init Calendly widget after DOM is visible
+        if (window.Calendly) {
+            Calendly.initInlineWidget({
+                url: url,
+                parentElement: document.getElementById('calendly-embed')
+            });
+        }
     }
 
     function resetForm() {
